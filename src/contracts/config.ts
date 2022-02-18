@@ -9,7 +9,14 @@ export interface DBI {
   redisUrl: string;
 }
 
+export interface SlackI {
+  signingSecret: string;
+  appToken: string;
+  token: string;
+}
+
 export interface ConfigI {
   server: ServerI;
+  slack: SlackI;
   db: DBI;
 }
