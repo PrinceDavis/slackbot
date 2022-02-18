@@ -1,0 +1,42 @@
+version: "3"
+services:
+  redis:
+    image: redis
+    container_name: slackbot_redis
+    networks:
+      - webnet
+    volumes:
+      - redis-data:/var/lib/redis/data
+    command: "redis-server"
+    ports:
+      - 6379:6379
+  mongodb:
+    image: mongo
+    container_name: slackbot_mongodb
+    networks:
+      - webnet
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - mongo-data:/var/lib/mongodb/data
+    ports:
+      - 27017:27017
+  app:
+    build: .
+    env_file:
+      - ./.env
+    restart: always
+    networks:
+      - webnet
+    depends_on:
+      - mongodb
+      - redis
+    ports:
+      - "6000:5000"
+
+networks:
+  webnet:
+volumes:
+  mongo-data:
+  redis-data:
