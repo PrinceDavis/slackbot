@@ -1,53 +1,36 @@
 import { App } from "@slack/bolt";
 
+import { BotHandlers } from "../entrypoints/http/bot-handlers";
 import { ConfigI } from "../contracts/config";
 import { Logger } from "../adapters";
 
 interface HeimdallI {
+  botHandlers: BotHandlers;
   logger: typeof Logger;
   config: ConfigI;
 }
 export class Heimdall {
+  botHandlers: BotHandlers;
   logger: typeof Logger;
   config: ConfigI;
   slackApp: App;
-  constructor({ config, logger }: HeimdallI) {
+  constructor({ config, logger, botHandlers }: HeimdallI) {
     this.slackApp = new App({
       signingSecret: config.slack.signingSecret,
       appToken: config.slack.appToken,
       token: config.slack.token,
       socketMode: true,
     });
+    this.botHandlers = botHandlers;
     this.logger = logger;
     this.config = config;
     this.registerHandlers();
   }
 
   registerHandlers() {
-    this.slackApp.command("/tg", async ({ command, ack, say }) => {
-      try {
-        console.log(command);
-        await ack();
-        say("Wad up buddy");
-      } catch (error) {
-        console.error(error);
-      }
-    });
-
-    this.slackApp.command("/bot", async ({ command, ack, say }) => {
-      try {
-        const { text } = command;
-        console.log(text);
-        await ack();
-        if (text === "hello") {
-          say("Welcome. How are you doing?");
-        } else {
-          say("Sorry I don't understand the command");
-        }
-      } catch (error) {
-        this.logger.error(error);
-      }
-    });
+    this.slackApp.action("hobby_selection", this.botHandlers.handleHobbies);
+    this.slackApp.action("mood_selection", this.botHandlers.handleMood);
+    this.slackApp.command("/bot", this.botHandlers.handleSlashBot);
   }
 
   async listen(): Promise<void> {
