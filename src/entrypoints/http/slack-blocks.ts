@@ -19,21 +19,21 @@ export const blocks = {
               type: "plain_text",
               text: "Doing Well",
             },
-            value: "value-0",
+            value: "Doing Well",
           },
           {
             text: {
               type: "plain_text",
               text: "Neutral",
             },
-            value: "value-1",
+            value: "Neutral",
           },
           {
             text: {
               type: "plain_text",
               text: "Feeling Lucky",
             },
-            value: "value-2",
+            value: "Feeling Lucky",
           },
         ],
       },
@@ -59,35 +59,35 @@ export const blocks = {
               type: "plain_text",
               text: "Football",
             },
-            value: "value-0",
+            value: "Football",
           },
           {
             text: {
               type: "plain_text",
               text: "Music",
             },
-            value: "value-1",
+            value: "Music",
           },
           {
             text: {
               type: "plain_text",
               text: "Sleep",
             },
-            value: "value-2",
+            value: "Sleep",
           },
           {
             text: {
               type: "plain_text",
               text: "Movies",
             },
-            value: "value-2",
+            value: "Movies",
           },
           {
             text: {
               type: "plain_text",
               text: "Basketball",
             },
-            value: "value-2",
+            value: "Basketball",
           },
         ],
       },

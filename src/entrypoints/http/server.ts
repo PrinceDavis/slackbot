@@ -6,7 +6,7 @@ import { ConfigI } from "../../contracts/config";
 import { Heimdall } from "../../services/heimdall";
 import { diContainer } from "../di-container";
 import { database, Logger } from "../../adapters";
-// import { registerRoutes } from "./routes";
+import { registerRoutes } from "./routes";
 
 interface ServerI {
   logger: typeof Logger;
@@ -31,7 +31,7 @@ export class Server {
     this.fastify.register(cors);
     this.fastify.register(helment, { contentSecurityPolicy: false });
 
-    // registerRoutes(this.fastify);
+    registerRoutes(this.fastify);
     this.fastify.addHook("onRequest", async (req: any) => {
       req.diContainer = diContainer;
     });

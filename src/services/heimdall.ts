@@ -28,9 +28,16 @@ export class Heimdall {
   }
 
   registerHandlers() {
-    this.slackApp.action("hobby_selection", this.botHandlers.handleHobbies);
-    this.slackApp.action("mood_selection", this.botHandlers.handleMood);
-    this.slackApp.command("/bot", this.botHandlers.handleSlashBot);
+    const caller = this.botHandlers;
+    this.slackApp.command("/bot", this.botHandlers.handleSlashBot.bind(caller));
+    this.slackApp.action(
+      "hobby_selection",
+      this.botHandlers.handleHobbies.bind(caller)
+    );
+    this.slackApp.action(
+      "mood_selection",
+      this.botHandlers.handleMood.bind(caller)
+    );
   }
 
   async listen(): Promise<void> {
